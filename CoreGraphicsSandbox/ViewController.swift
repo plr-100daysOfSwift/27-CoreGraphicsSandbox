@@ -14,7 +14,7 @@ class ViewController: UIViewController {
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		drawRectangle()
+		drawNeutralFaceEmoji()
 
 	}
 
@@ -34,6 +34,8 @@ class ViewController: UIViewController {
 			drawRotatedSquares()
 		case 4:
 			drawLines()
+		case 5:
+			drawNeutralFaceEmoji()
 		default:
 			break
 		}
@@ -136,6 +138,50 @@ class ViewController: UIViewController {
 
 			ctx.cgContext.setStrokeColor(UIColor.black.cgColor)
 			ctx.cgContext.strokePath()
+		}
+
+		imageView.image = image
+
+	}
+
+	func drawNeutralFaceEmoji() {
+		let renderer = UIGraphicsImageRenderer(size: CGSize(width: 512, height: 512))
+
+		let image = renderer.image { ctx in
+			ctx.cgContext.translateBy(x: 256, y: 256)
+
+			// face
+
+			let rectangle = CGRect(x: -256, y: -256, width: 512, height: 512).insetBy(dx: 5, dy: 5)
+			ctx.cgContext.setFillColor(UIColor.yellow.cgColor)
+			ctx.cgContext.setStrokeColor(UIColor.orange.cgColor)
+			ctx.cgContext.setLineWidth(10)
+			ctx.cgContext.addEllipse(in: rectangle)
+
+			ctx.cgContext.drawPath(using: .fillStroke)
+
+			// mouth
+
+			ctx.cgContext.setStrokeColor(UIColor.brown.cgColor)
+
+			let mouthLength = 200
+			ctx.cgContext.move(to: CGPoint(x: -mouthLength / 2, y: 100))
+			ctx.cgContext.addLine(to: CGPoint(x: mouthLength / 2, y: 100))
+
+			ctx.cgContext.drawPath(using: .stroke)
+
+			// eyes
+
+			let eyeSize = CGSize(width: 50, height: 75)
+
+			ctx.cgContext.setFillColor(UIColor.brown.cgColor)
+			let leftEye = CGRect(origin: CGPoint(x: -eyeSize.width * 2, y: -100), size: eyeSize)
+			let rightEye = CGRect(origin: CGPoint(x: eyeSize.width, y: -100), size: eyeSize)
+			ctx.cgContext.addEllipse(in: leftEye)
+			ctx.cgContext.addEllipse(in: rightEye)
+
+			ctx.cgContext.drawPath(using: .fill)
+
 		}
 
 		imageView.image = image
