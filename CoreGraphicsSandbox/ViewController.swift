@@ -31,6 +31,13 @@ class ViewController: UIViewController {
 	}
 
 	func drawRectangle() {
+		let renderer = UIGraphicsImageRenderer(size: CGSize(width: 512, height: 512))
+
+		let image = renderer.image { ctx in
+			//
+		}
+
+		imageView.image = image
 
 	}
 	
