@@ -70,6 +70,7 @@ class ViewController: UIViewController {
 
 	}
 
+	// TODO: you can actually make checkerboards using a Core Image filter – check out CICheckerboardGenerator to see how!
 	func drawCheckerboard() {
 		let renderer = UIGraphicsImageRenderer(size: CGSize(width: 512, height: 512))
 
