@@ -14,7 +14,7 @@ class ViewController: UIViewController {
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		drawTwin()
+		drawLegacyCircle()
 
 	}
 
@@ -38,6 +38,8 @@ class ViewController: UIViewController {
 			drawNeutralFaceEmoji()
 		case 6:
 			drawTwin()
+		case 7:
+			drawLegacyCircle()
 		default:
 			break
 		}
@@ -242,6 +244,26 @@ class ViewController: UIViewController {
 		}
 
 		imageView.image = image
+	}
+
+	func drawLegacyCircle() {
+		UIGraphicsBeginImageContextWithOptions(CGSize(width: 512, height: 512), false, 0)
+
+		if let ctx = UIGraphicsGetCurrentContext() {
+			ctx.setFillColor(UIColor.red.cgColor)
+			ctx.setStrokeColor(UIColor.green.cgColor)
+			ctx.setLineWidth(10)
+
+			let rectangle = CGRect(x: 5, y: 5, width: 502, height: 502)
+			ctx.addEllipse(in: rectangle)
+			ctx.drawPath(using: .fillStroke)
+		}
+
+		if let img = UIGraphicsGetImageFromCurrentImageContext() {
+			imageView.image = img
+		}
+
+		UIGraphicsEndImageContext()
 	}
 
 }
