@@ -14,7 +14,7 @@ class ViewController: UIViewController {
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		drawNeutralFaceEmoji()
+		drawTwin()
 
 	}
 
@@ -36,6 +36,8 @@ class ViewController: UIViewController {
 			drawLines()
 		case 5:
 			drawNeutralFaceEmoji()
+		case 6:
+			drawTwin()
 		default:
 			break
 		}
@@ -186,6 +188,60 @@ class ViewController: UIViewController {
 
 		imageView.image = image
 
+	}
+
+	func drawTwin() {
+		let renderer = UIGraphicsImageRenderer(size: CGSize(width: 512, height: 512))
+
+		let image = renderer.image { ctx in
+
+			let lineWidth: CGFloat = 15
+			let em: CGFloat = lineWidth * 5
+			let en = em / 2
+			let looseKern = em / 4 + lineWidth
+			let tightKern = en / 4 + lineWidth
+			let height = en * 3
+
+			var start = CGPoint(x: lineWidth, y: em)
+
+			let context = ctx.cgContext
+			context.setStrokeColor(UIColor.blue.cgColor)
+			context.setLineJoin(.round)
+			context.setLineCap(.round)
+			context.setLineWidth(lineWidth)
+
+			// T
+			context.move(to: start)
+			context.addLine(to: CGPoint(x: start.x + em, y: start.y) )
+			context.move(to: CGPoint(x: start.x + en, y: start.y))
+			context.addLine(to: CGPoint(x: start.x + en, y: start.y + height))
+
+			// W
+			start.x = start.x + em + looseKern
+			context.move(to: start)
+			context.addLine(to: CGPoint(x: start.x + en / 2, y: start.y + height))
+			context.addLine(to: CGPoint(x: start.x + en, y: start.y))
+			context.addLine(to: CGPoint(x: start.x + (em * 0.75), y: start.y + height))
+			context.addLine(to: CGPoint(x: start.x + em, y: start.y))
+
+			// I
+			start.x = start.x + em + looseKern
+			context.move(to: start)
+			context.addLine(to: CGPoint(x: start.x, y: start.y + height))
+
+			// N
+			start.x = start.x + lineWidth + tightKern
+			context.move(to: start)
+			context.addLine(to: CGPoint(x: start.x, y: start.y + height))
+			context.move(to: start)
+			context.addLine(to: CGPoint(x: start.x + em, y: start.y + height))
+			context.addLine(to: CGPoint(x: start.x + em, y: start.y))
+
+			context.drawPath(using: .stroke)
+
+		}
+
+		imageView.image = image
 	}
 
 }
